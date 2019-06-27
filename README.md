@@ -1,2 +1,2 @@
-# delphi-google-analytics
-Class Delphi for Google Analytics
+# DGoogleAnalytics
+Classe criada para facilitar a integração do Delphi com Google Analytics
