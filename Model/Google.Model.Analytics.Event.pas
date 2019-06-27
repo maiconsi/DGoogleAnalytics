@@ -115,11 +115,15 @@ begin
     try
       Params.Values['v']  :=  '1';
       Params.Values['tid']:=  FParent.GooglePropertyID;
-      Params.Values['cid']:=  FParent.ClienteID;
+
+      Params.Values['cid']:= FParent.ClienteID;
+
       if FParent.UserID <> '' then
         Params.Values['uid']:=  FParent.UserID;
 
       Params.Values['ul'] :=  'pt-br';
+
+      Params.Values['sr'] :=  FParent.ScreenResolution;
 
       Params.Values['cs'] :=  Format('%s %s', [
                                       FParent.AppInfo.AppName,
@@ -169,3 +173,4 @@ begin
 end;
 
 end.
+

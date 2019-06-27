@@ -15,6 +15,9 @@ type
     function UserID: String; overload;
     function UserID(Value: String): iControllerGoogleAnalytics; overload;
 
+    function SystemPlatform: String;
+    function ScreenResolution: String;
+
     function URL: String; overload;
     function URL(Value: String): iControllerGoogleAnalytics; overload;
 
@@ -28,7 +31,6 @@ type
     function StartSession: IControllerGoogleAnalytics;
     function EndSession: IControllerGoogleAnalytics;
   end;
-
 
 
 implementation

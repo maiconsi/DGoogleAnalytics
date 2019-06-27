@@ -15,11 +15,16 @@ type
     FClienteID: String;
     FUserID: String;
 
+    FSystemPlatform: String;
+    FScreenResolution: String;
+
     FURL  : String;
 
     FAppInfo: iModelGoogleAppInfo;
 
     function GuidCreate: string;
+    function GetSystemPlatform: string;
+    function GetScreenResolution: string;
     procedure ValidaDados;
   public
     constructor Create(AGooglePropertyID: String; AUserID: String = '');
@@ -32,6 +37,9 @@ type
     function ClienteID(Value: String): iControllerGoogleAnalytics; overload;
     function UserID: String; overload;
     function UserID(Value: String): iControllerGoogleAnalytics; overload;
+
+    function SystemPlatform: String;
+    function ScreenResolution: String;
 
     function URL: String; overload;
     function URL(Value: String): iControllerGoogleAnalytics; overload;
@@ -51,10 +59,11 @@ implementation
 
 uses
   Winapi.ActiveX,
+  Winapi.Windows,
   System.Classes,
-
-  Google.Model.Analytics.Factory,
-  Google.Model.Analytics.Invoker, System.SysUtils;
+  System.SysUtils,
+  System.Win.Registry,
+  Vcl.Forms, Google.Model.Analytics.Factory, Google.Model.Analytics.Invoker;
 
 { TControllerGoogleAnalytics }
 
@@ -83,6 +92,9 @@ begin
 
   FClienteID  :=  GuidCreate;
 
+  FSystemPlatform  := GetSystemPlatform;
+  FScreenResolution:=  GetScreenResolution;
+
   FURL    :=  'https://www.google-analytics.com/collect';
 
   FAppInfo  :=  TModelGoogleAnalyticsFactory.New.AppInfo;
@@ -90,7 +102,7 @@ end;
 
 destructor TControllerGoogleAnalytics.Destroy;
 begin
-
+  Sleep(100); //apenas para resolver o problema com a memoria ao fecha o sistema
   inherited;
 end;
 
@@ -138,6 +150,31 @@ begin
         .isFatal(AIsFatal)
       .Send)
     .Execute;
+end;
+
+function TControllerGoogleAnalytics.GetScreenResolution: string;
+begin
+  Result  :=  Screen.Width.Tostring + 'x' + Screen.Height.ToString;
+end;
+
+function TControllerGoogleAnalytics.GetSystemPlatform: string;
+var
+  Reg: TRegistry;
+begin
+  Result  :=  '';
+
+  Reg := TRegistry.Create;
+  try
+    Reg.RootKey := HKEY_LOCAL_MACHINE;
+    if Reg.OpenKeyReadOnly('SOFTWARE\Microsoft\Windows NT\CurrentVersion') then
+    begin
+      Result := Format('%s - %s', [Reg.ReadString('ProductName'),
+                                    Reg.ReadString('BuildLabEx')]);
+      Reg.CloseKey;
+    end;
+  finally
+    Reg.Free;
+  end;
 end;
 
 function TControllerGoogleAnalytics.GooglePropertyID(
@@ -190,6 +227,11 @@ begin
     .Execute;
 end;
 
+function TControllerGoogleAnalytics.ScreenResolution: String;
+begin
+  Result  :=  FScreenResolution;
+end;
+
 function TControllerGoogleAnalytics.ScreenView(AScreenName: String): IControllerGoogleAnalytics;
 begin
   Result  :=  Self;
@@ -216,6 +258,11 @@ begin
         .Operation(osStart)
       .Send)
     .Execute;
+end;
+
+function TControllerGoogleAnalytics.SystemPlatform: String;
+begin
+  Result  :=  FSystemPlatform;
 end;
 
 function TControllerGoogleAnalytics.URL(
@@ -251,3 +298,4 @@ begin
 end;
 
 end.
+

@@ -25,12 +25,13 @@ type
 implementation
 
 uses
-  Google.Model.Analytics.ScreenView,
   Google.Model.Analytics.AppInfo,
-  Google.Model.Analytics.PageView,
-  Google.Model.Analytics.Session,
   Google.Model.Analytics.Event,
-  Google.Model.Analytics.Exception;
+  Google.Model.Analytics.Exception,
+  Google.Model.Analytics.PageView,
+  Google.Model.Analytics.ScreenView,
+  Google.Model.Analytics.Session;
+
 
 { TModelGoogleAnalyticsFactory }
 
@@ -86,3 +87,4 @@ begin
 end;
 
 end.
+

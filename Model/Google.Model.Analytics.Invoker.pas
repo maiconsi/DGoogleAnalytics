@@ -21,7 +21,8 @@ type
 implementation
 
 uses
-  System.SysUtils, System.Classes;
+  System.SysUtils,
+  System.Classes;
 
 { TModelGoogleAnalyticsInvoker }
 
@@ -68,3 +69,4 @@ begin
 end;
 
 end.
+

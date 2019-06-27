@@ -14,7 +14,8 @@ uses
   Google.Model.Analytics.Session in 'Model\Google.Model.Analytics.Session.pas',
   Google.Model.Analytics.Event in 'Model\Google.Model.Analytics.Event.pas',
   Google.Model.Analytics.Exception in 'Model\Google.Model.Analytics.Exception.pas',
-  Google.Model.Analytics.Invoker in 'Model\Google.Model.Analytics.Invoker.pas';
+  Google.Model.Analytics.Invoker in 'Model\Google.Model.Analytics.Invoker.pas',
+  GoogleAnalyticsGlobal in 'GoogleAnalyticsGlobal.pas';
 
 {$R *.res}
 
