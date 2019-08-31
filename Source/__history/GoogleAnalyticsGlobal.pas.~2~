@@ -1,0 +1,29 @@
+unit GoogleAnalyticsGlobal;
+
+interface
+
+uses Google.Analytics.Controller.Interfaces;
+
+var _GoogleAnalytics: iControllerGoogleAnalytics;
+
+implementation
+
+uses Google.Analytics.Controller;
+
+const
+  //Google Analytics property ID.
+  GooglePropertyID =  'UA-137278534-1';
+  AppName = 'Integrating Gerencial';
+  AppLicense = 'Comercial';
+  AppEdition = 'ERP';
+
+initialization
+  _GoogleAnalytics  :=  TControllerGoogleAnalytics.New(GooglePropertyID);
+
+  _GoogleAnalytics.AppInfo
+    .AppName(AppName)
+    .AppVersion(VersaoSistema)
+    .AppLicense(AppLicense)
+    .AppEdition(AppEdition);
+
+end.

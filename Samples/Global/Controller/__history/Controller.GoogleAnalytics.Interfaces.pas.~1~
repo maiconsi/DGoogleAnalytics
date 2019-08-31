@@ -1,0 +1,16 @@
+unit Controller.GoogleAnalytics.Interfaces;
+
+interface
+
+type
+  IControllerGoogleAnalytics = interface
+    ['{7D7E3C3C-7A5C-4EBB-A7B0-65603FF317C6}']
+    function Evento(AEvent: IGoogleEvent): IControllerGoogleAnalytics;
+    function ScreenView(AScreenView: IGoogleScreeView): IControllerGoogleAnalytics;
+    function PageView(APageView: IGooglePageView): IControllerGoogleAnalytics;
+  end;
+
+implementation
+
+end.
+

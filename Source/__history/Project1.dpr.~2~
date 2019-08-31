@@ -1,0 +1,28 @@
+program Project1;
+
+uses
+  Vcl.Forms,
+  Unit1 in 'Unit1.pas' {Form1},
+  Google.Controller.GoogleAnalytics.Interfaces in 'Controller\Google.Controller.GoogleAnalytics.Interfaces.pas',
+  Google.Model.GoogleAnalytics.Interfaces in 'Model\Google.Model.GoogleAnalytics.Interfaces.pas',
+  Google.Controller.GoogleAnalytics in 'Controller\Google.Controller.GoogleAnalytics.pas',
+  Google.Model.GoogleAnalytics.ScreenView in 'Model\Google.Model.GoogleAnalytics.ScreenView.pas',
+  Google.Model.GoogleAnalytics.Factory.Interfaces in 'Model\Google.Model.GoogleAnalytics.Factory.Interfaces.pas',
+  Google.Model.GoogleAnalytics.Factory in 'Model\Google.Model.GoogleAnalytics.Factory.pas',
+  Google.Model.GoogleAnalytics.AppInfo in 'Model\Google.Model.GoogleAnalytics.AppInfo.pas',
+  Google.Model.GoogleAnalytics.PageView in 'Model\Google.Model.GoogleAnalytics.PageView.pas',
+  Google.Model.GoogleAnalytics.Session in 'Model\Google.Model.GoogleAnalytics.Session.pas',
+  Google.Model.GoogleAnalytics.Event in 'Model\Google.Model.GoogleAnalytics.Event.pas',
+  Google.Model.GoogleAnalytics.Exception in 'Model\Google.Model.GoogleAnalytics.Exception.pas',
+  Google.Model.GoogleAnalytics.Invoker in 'Model\Google.Model.GoogleAnalytics.Invoker.pas';
+
+{$R *.res}
+
+begin
+  ReportMemoryLeaksOnShutdown := True;
+
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

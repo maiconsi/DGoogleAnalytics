@@ -1,0 +1,132 @@
+unit Google.Model.GoogleAnalytics.PageView;
+
+interface
+
+uses
+  Google.Model.GoogleAnalytics.Interfaces,
+  Google.Controller.GoogleAnalytics.Interfaces;
+
+type
+  TModelGoogleAnalyticsPageView = Class(TInterfacedObject, iModelGooglePageView, iCommand)
+  private
+    FParent: iControllerGoogleAnalytics;
+
+    FHostName: String;
+    FPage: String;
+    FTitle: String;
+  public
+    constructor Create(AParent: iControllerGoogleAnalytics);
+    destructor Destroy; override;
+    class function New(AParent: iControllerGoogleAnalytics): iModelGooglePageView;
+
+    //iModelGooglePageView
+    function DocumentHostName: String; overload;
+    function DocumentHostName(Value: String): iModelGooglePageView; overload;
+    function Page: String; overload;
+    function Page(Value: String): iModelGooglePageView; overload;
+    function Title: String; overload;
+    function Title(Value: String): iModelGooglePageView; overload;
+    function Send: iCommand;
+
+    //iCommand
+    function Execute: iCommand;
+  End;
+
+implementation
+
+{ TModelGoogleAnalyticsPageView }
+
+uses
+  System.Net.HttpClientComponent, System.Classes, System.SysUtils;
+
+constructor TModelGoogleAnalyticsPageView.Create(AParent: iControllerGoogleAnalytics);
+begin
+  FParent :=  AParent;
+end;
+
+destructor TModelGoogleAnalyticsPageView.Destroy;
+begin
+
+  inherited;
+end;
+
+function TModelGoogleAnalyticsPageView.Execute: iCommand;
+var
+  HTTPClient: TNetHTTPClient;
+  Params: TStringList;
+begin
+  HTTPClient:= TNetHTTPClient.Create(nil);
+  try
+    Params := TStringList.Create;
+    try
+      Params.Values['v']  := '1';
+      Params.Values['tid']:= FParent.GooglePropertyID;
+      Params.Values['cid']:= FParent.ClienteID;
+      Params.Values['uid']:=  FParent.UserID;
+
+      Params.Values['ul'] :=  'pt-br';
+
+      Params.Values['t']  := 'pageview';
+      Params.Values['dh'] := FHostName;
+      Params.Values['dp'] := FPage;
+      Params.Values['dt'] := FTitle;
+
+      HTTPClient.Post(FParent.URL, Params, nil, TEncoding.Default);
+    finally
+      Params.Free;
+    end;
+  finally
+    HTTPClient.Free;
+  end;
+end;
+
+function TModelGoogleAnalyticsPageView.DocumentHostName: String;
+begin
+  Result  :=  FHostName;
+end;
+
+function TModelGoogleAnalyticsPageView.DocumentHostName(
+  Value: String): iModelGooglePageView;
+begin
+  Result  :=  Self;
+
+  FHostName :=  Value;
+end;
+
+class function TModelGoogleAnalyticsPageView.New(AParent: iControllerGoogleAnalytics): iModelGooglePageView;
+begin
+  Result := Self.Create(AParent);
+end;
+
+function TModelGoogleAnalyticsPageView.Page(
+  Value: String): iModelGooglePageView;
+begin
+  Result  :=  Self;
+
+  FPage :=  Value;
+end;
+
+function TModelGoogleAnalyticsPageView.Page: String;
+begin
+  Result  :=  FPage;
+end;
+
+function TModelGoogleAnalyticsPageView.Send: iCommand;
+begin
+  Result  :=  Self;
+end;
+
+function TModelGoogleAnalyticsPageView.Title(
+  Value: String): iModelGooglePageView;
+begin
+  Result  :=  Self;
+
+  FTitle :=  Value;
+end;
+
+function TModelGoogleAnalyticsPageView.Title: String;
+begin
+  Result  :=  FTitle;
+end;
+
+end.

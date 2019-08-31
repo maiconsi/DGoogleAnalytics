@@ -1,0 +1,89 @@
+unit Google.Model.GoogleAnalytics.ScreenView;
+
+interface
+
+uses
+  Google.Model.GoogleAnalytics.Interfaces,
+  Google.Controller.GoogleAnalytics.Interfaces;
+
+type
+  TModelGoogleAnalyticsScreenView = Class(TInterfacedObject, iModelGoogleScreeView, iCommand)
+  private
+    FParent: iControllerGoogleAnalytics;
+    FScreenName: String;
+    FURL: String;
+  public
+    constructor Create(AParent: iControllerGoogleAnalytics);
+    destructor Destroy; override;
+    class function New(AParent: iControllerGoogleAnalytics): iModelGoogleScreeView;
+
+    //iGoogleScreeView
+    function ScreenName: String; overload;
+    function ScreenName(Value: String): iModelGoogleScreeView; overload;
+    function Send: iCommand;
+
+    //iCommand
+    function Execute: iCommand;
+  End;
+
+implementation
+
+{ TModelGoogleAnalyticsScreenView }
+
+uses
+  System.Net.HttpClientComponent, System.Classes;
+
+constructor TModelGoogleAnalyticsScreenView.Create(AParent: iControllerGoogleAnalytics);
+begin
+  FParent :=  AParent;
+  FURL    :=  'https://www.google-analytics.com/collect';
+end;
+
+destructor TModelGoogleAnalyticsScreenView.Destroy;
+begin
+
+  inherited;
+end;
+
+function TModelGoogleAnalyticsScreenView.Execute: iCommand;
+var
+  HTTPClient: TNetHTTPClient;
+  Params: TStringList;
+begin
+  HTTPClient:= TNetHTTPClient.Create(nil);
+  try
+    Params := TStringList.Create;
+    try
+      HTTPClient.Post(FURL, String1, nil, TEncoding.Default);
+    finally
+      Params.Free;
+    end;
+  finally
+    HTTPClient.Free;
+  end;
+end;
+
+class function TModelGoogleAnalyticsScreenView.New(AParent: iControllerGoogleAnalytics): iModelGoogleScreeView;
+begin
+  Result := Self.Create(AParent);
+end;
+
+function TModelGoogleAnalyticsScreenView.ScreenName(
+  Value: String): iModelGoogleScreeView;
+begin
+  Result  :=  Self;
+
+  FScreenName :=  Value;
+end;
+
+function TModelGoogleAnalyticsScreenView.Send: iCommand;
+begin
+  Result  :=  Self;
+end;
+
+function TModelGoogleAnalyticsScreenView.ScreenName: String;
+begin
+  Result  :=  FScreenName;
+end;
+
+end.

@@ -1,0 +1,98 @@
+unit Google.Model.GoogleAnalytics.AppInfo;
+
+interface
+
+uses
+  Google.Model.GoogleAnalytics.Interfaces;
+
+type
+  TModelGoogleApp = Class(TInterfacedObject, iModelGoogleAppInfo)
+  private
+    FAppName: String;
+    FAppVersion: String;
+    FAppLicense: String;
+    FAppEdition: String;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iModelGoogleAppInfo;
+
+    function AppName: String; overload;
+    function AppName(Value: String): iModelGoogleAppInfo; overload;
+    function AppVersion: String; overload;
+    function AppVersion(Value: String): iModelGoogleAppInfo; overload;
+    function AppLicense: String; overload;
+    function AppLicense(Value: String): iModelGoogleAppInfo; overload;
+    function AppEdition: String; overload;
+    function AppEdition(Value: String): iModelGoogleAppInfo; overload;
+  End;
+
+implementation
+
+{ TModelGoogleApp }
+
+function TModelGoogleApp.AppEdition(Value: String): iModelGoogleAppInfo;
+begin
+  Result  :=  Self;
+
+  FAppEdition  :=  Value;
+end;
+
+function TModelGoogleApp.AppEdition: String;
+begin
+  Result  :=  FAppEdition;
+end;
+
+function TModelGoogleApp.AppLicense(Value: String): iModelGoogleAppInfo;
+begin
+  Result  :=  Self;
+
+  FAppLicense  :=  Value;
+end;
+
+function TModelGoogleApp.AppLicense: String;
+begin
+  Result  :=  FAppLicense;
+end;
+
+function TModelGoogleApp.AppName: String;
+begin
+  Result  :=  FAppName;
+end;
+
+function TModelGoogleApp.AppName(Value: String): iModelGoogleAppInfo;
+begin
+  Result  :=  Self;
+
+  FAppName  :=  Value;
+end;
+
+function TModelGoogleApp.AppVersion: String;
+begin
+  Result  :=  FAppVersion;
+end;
+
+function TModelGoogleApp.AppVersion(Value: String): iModelGoogleAppInfo;
+begin
+Result  :=  Self;
+
+  FAppVersion  :=  Value;
+end;
+
+constructor TModelGoogleApp.Create;
+begin
+
+end;
+
+destructor TModelGoogleApp.Destroy;
+begin
+
+  inherited;
+end;
+
+class function TModelGoogleApp.New: iModelGoogleAppInfo;
+begin
+  Result := Self.Create;
+end;
+
+end.

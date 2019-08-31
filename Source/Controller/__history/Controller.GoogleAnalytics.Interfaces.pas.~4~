@@ -1,0 +1,43 @@
+unit Controller.GoogleAnalytics.Interfaces;
+
+interface
+
+type
+  iGoogleEvent = interface;
+  iGooglePageView = interface;
+  iGoogleScreeView = interface;
+
+  iCommand = interface
+    ['{B7514473-F219-4FC2-B67E-97D0138DE38C}']
+    function Execute: iCommand;
+  end;
+
+  iInvoker = interface
+    ['{BE65A4AB-2C8E-46BE-BD57-E17788D4DAD9}']
+    function Add(Value: iCommand): iInvoker;
+  end;
+
+  iControllerGoogleAnalytics = interface
+    ['{7D7E3C3C-7A5C-4EBB-A7B0-65603FF317C6}']
+    function Evento(AEvent: IGoogleEvent): IControllerGoogleAnalytics;
+    function ScreenView(AScreenView: IGoogleScreeView): IControllerGoogleAnalytics;
+    function PageView(APageView: IGooglePageView): IControllerGoogleAnalytics;
+  end;
+
+  IGoogleEvent = interface
+    ['{42F17F3B-099D-4E0D-BCE7-FED8B78C97D6}']
+  end;
+
+  IGoogleScreeView = interface
+    ['{0E97F395-EA31-4F46-8E21-CA0F1AF9FA35}']
+
+  end;
+
+  IGooglePageView = interface
+    ['{91B15DC3-50AC-493B-894E-815AE8A40708}']
+  end;
+
+implementation
+
+end.
+

@@ -1,0 +1,161 @@
+unit Google.Model.GoogleAnalytics.Event;
+
+interface
+
+uses
+  Google.Model.GoogleAnalytics.Interfaces,
+  Google.Controller.GoogleAnalytics.Interfaces;
+
+type
+  TModelGoogleAnalyticsEvent = Class(TInterfacedObject, iModelGoogleEvent, iCommand)
+  private
+    FParent: iControllerGoogleAnalytics;
+
+    FCategory: String;
+    FAction: String;
+    FEventLabel: String;
+    FEventValue: String;
+  public
+    constructor Create(AParent: iControllerGoogleAnalytics);
+    destructor Destroy; override;
+    class function New(AParent: iControllerGoogleAnalytics): iModelGoogleEvent;
+
+    //iModelGoogleEvent
+    function Category: String; overload;
+    function Category(Value: String): iModelGoogleEvent; overload;
+    function Action: String; overload;
+    function Action(Value: String): iModelGoogleEvent; overload;
+    function EventLabel: String; overload;
+    function EventLabel(Value: String): iModelGoogleEvent; overload;
+    function EventValue: String; overload;
+    function EventValue(Value: String): iModelGoogleEvent; overload;
+    function Send: iCommand;
+
+    //iCommand
+    function Execute: iCommand;
+  End;
+
+implementation
+
+{ TModelGoogleAnalyticsEvent }
+
+uses
+  System.Net.HttpClientComponent, System.Classes, System.SysUtils;
+
+function TModelGoogleAnalyticsEvent.Action(Value: String): iModelGoogleEvent;
+begin
+  Result  :=  Self;
+
+  FAction :=  Value;
+end;
+
+function TModelGoogleAnalyticsEvent.Action: String;
+begin
+  Result  :=  FAction;
+end;
+
+function TModelGoogleAnalyticsEvent.Category: String;
+begin
+  Result  :=  FCategory;
+end;
+
+function TModelGoogleAnalyticsEvent.Category(Value: String): iModelGoogleEvent;
+begin
+  Result  :=  Self;
+
+  FCategory :=  Value;
+end;
+
+constructor TModelGoogleAnalyticsEvent.Create(AParent: iControllerGoogleAnalytics);
+begin
+  FParent :=  AParent;
+end;
+
+destructor TModelGoogleAnalyticsEvent.Destroy;
+begin
+
+  inherited;
+end;
+
+function TModelGoogleAnalyticsEvent.EventLabel(
+  Value: String): iModelGoogleEvent;
+begin
+  Result  :=  Self;
+
+  FEventLabel :=  Value;
+end;
+
+function TModelGoogleAnalyticsEvent.EventLabel: String;
+begin
+  Result  :=  FEventLabel;
+end;
+
+function TModelGoogleAnalyticsEvent.EventValue: String;
+begin
+  Result  :=  FEventValue;
+end;
+
+function TModelGoogleAnalyticsEvent.EventValue(
+  Value: String): iModelGoogleEvent;
+begin
+  Result  :=  Self;
+
+  FEventValue :=  Value;
+end;
+
+function TModelGoogleAnalyticsEvent.Execute: iCommand;
+var
+  HTTPClient: TNetHTTPClient;
+  Params: TStringList;
+begin
+  HTTPClient:= TNetHTTPClient.Create(nil);
+  try
+    Params := TStringList.Create;
+    try
+      Params.Values['v']  :=  '1';
+      Params.Values['tid']:=  FParent.GooglePropertyID;
+      Params.Values['cid']:=  FParent.ClienteID;
+      if FParent.UserID <> '' then
+        Params.Values['uid']:=  FParent.UserID;
+
+      Params.Values['ul'] :=  'pt-br';
+
+      Params.Values['t']  := 'event';
+
+      (*AppInfo*)
+      if FParent.AppInfo.AppName <> '' then
+        Params.Values['an'] := FParent.AppInfo.AppName;
+      if FParent.AppInfo.AppVersion <> '' then
+        Params.Values['av'] := FParent.AppInfo.AppVersion;
+      if FParent.AppInfo.AppID <> '' then
+        Params.Values['aid']  := FParent.AppInfo.AppID;
+      if FParent.AppInfo.AppInstalerID <> '' then
+        Params.Values['aiid'] := FParent.AppInfo.AppInstalerID;
+
+      (*Event*)
+      Params.Values['ec'] := FCategory;
+      Params.Values['ea'] := FAction;
+      Params.Values['el'] := FEventLabel;
+      Params.Values['ev'] := FEventValue;
+
+      HTTPClient.Post(FParent.URL, Params, nil, TEncoding.Default);
+    finally
+      Params.Free;
+    end;
+  finally
+    HTTPClient.Free;
+  end;
+end;
+
+
+class function TModelGoogleAnalyticsEvent.New(AParent: iControllerGoogleAnalytics): iModelGoogleEvent;
+begin
+  Result := Self.Create(AParent);
+end;
+
+function TModelGoogleAnalyticsEvent.Send: iCommand;
+begin
+  Result  :=  Self;
+end;
+
+end.
