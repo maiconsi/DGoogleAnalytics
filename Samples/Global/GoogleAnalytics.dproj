@@ -96,19 +96,19 @@
             <Form>frmPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Controller\Google.Controller.Analytics.Interfaces.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.Interfaces.pas"/>
-        <DCCReference Include="Controller\Google.Controller.Analytics.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.ScreenView.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.Factory.Interfaces.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.Factory.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.AppInfo.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.PageView.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.Session.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.Event.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.Exception.pas"/>
-        <DCCReference Include="Model\Google.Model.Analytics.Invoker.pas"/>
         <DCCReference Include="GoogleAnalyticsGlobal.pas"/>
+        <DCCReference Include="..\..\Source\Controller\Google.Controller.Analytics.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\Controller\Google.Controller.Analytics.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.AppInfo.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.Event.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.Exception.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.Factory.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.Factory.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.Invoker.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.PageView.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.ScreenView.pas"/>
+        <DCCReference Include="..\..\Source\Model\Google.Model.Analytics.Session.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
