@@ -40,8 +40,8 @@ type
     function Action(Value: String): iModelGoogleEvent; overload;
     function EventLabel: String; overload;
     function EventLabel(Value: String): iModelGoogleEvent; overload;
-    function EventValue: String; overload;
-    function EventValue(Value: String): iModelGoogleEvent; overload;
+    function EventValue: Integer; overload;
+    function EventValue(Value: Integer): iModelGoogleEvent; overload;
     function Send: iCommand;
   end;
 

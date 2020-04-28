@@ -15,7 +15,7 @@ type
     FCategory: String;
     FAction: String;
     FEventLabel: String;
-    FEventValue: String;
+    FEventValue: Integer;
   public
     constructor Create(AParent: iControllerGoogleAnalytics);
     destructor Destroy; override;
@@ -28,8 +28,8 @@ type
     function Action(Value: String): iModelGoogleEvent; overload;
     function EventLabel: String; overload;
     function EventLabel(Value: String): iModelGoogleEvent; overload;
-    function EventValue: String; overload;
-    function EventValue(Value: String): iModelGoogleEvent; overload;
+    function EventValue: Integer; overload;
+    function EventValue(Value: Integer): iModelGoogleEvent; overload;
     function Send: iCommand;
 
     //iCommand
@@ -91,13 +91,13 @@ begin
   Result  :=  FEventLabel;
 end;
 
-function TModelGoogleAnalyticsEvent.EventValue: String;
+function TModelGoogleAnalyticsEvent.EventValue: Integer;
 begin
   Result  :=  FEventValue;
 end;
 
 function TModelGoogleAnalyticsEvent.EventValue(
-  Value: String): iModelGoogleEvent;
+  Value: Integer): iModelGoogleEvent;
 begin
   Result  :=  Self;
 
@@ -109,6 +109,8 @@ var
   HTTPClient: TNetHTTPClient;
   Params: TStringList;
 begin
+  Result  :=  Self;
+
   HTTPClient:= TNetHTTPClient.Create(nil);
   try
     Params := TStringList.Create;
@@ -132,22 +134,12 @@ begin
 
       Params.Values['cm'] :=  FParent.AppInfo.AppEdition;
 
-      (*AppInfo*)
-      if FParent.AppInfo.AppName <> '' then
-        Params.Values['an'] := FParent.AppInfo.AppName;
-      if FParent.AppInfo.AppVersion <> '' then
-        Params.Values['av'] := FParent.AppInfo.AppVersion;
-      if FParent.AppInfo.AppID <> '' then
-        Params.Values['aid']  := FParent.AppInfo.AppID;
-      if FParent.AppInfo.AppInstalerID <> '' then
-        Params.Values['aiid'] := FParent.AppInfo.AppInstalerID;
-
       (*Event*)
       Params.Values['t']  := 'event';
       Params.Values['ec'] := FCategory;
       Params.Values['ea'] := FAction;
       Params.Values['el'] := FEventLabel;
-      Params.Values['ev'] := FEventValue;
+      Params.Values['ev'] := FEventValue.ToString;
 
       try
         HTTPClient.Post(FParent.URL, Params, nil, TEncoding.Default);

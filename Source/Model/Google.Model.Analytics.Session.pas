@@ -50,6 +50,8 @@ var
   HTTPClient: TNetHTTPClient;
   Params: TStringList;
 begin
+  Result  :=  Self;
+
   HTTPClient:= TNetHTTPClient.Create(nil);
   try
     Params := TStringList.Create;

@@ -3,7 +3,7 @@ object frmPrincipal: TfrmPrincipal
   Top = 0
   BorderIcons = [biSystemMenu]
   Caption = 'Google Analytics'
-  ClientHeight = 139
+  ClientHeight = 133
   ClientWidth = 221
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,6 +13,8 @@ object frmPrincipal: TfrmPrincipal
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

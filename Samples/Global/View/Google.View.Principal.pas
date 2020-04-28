@@ -16,6 +16,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure BtnSendPageViewClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,7 +41,7 @@ begin
     .Event('Relatorio',
             'Imprimir',
             'Vendas do dia',
-            'Inclua aqui qualquer informação relevante do evento');
+            123); //Ex. Algum valor relavante ou não informe nada.
 
   ShowMessage('Imprimir relatório de vendas do dia.');
 end;
@@ -58,10 +61,27 @@ begin
   _GoogleAnalytics
     .Event('Avisos',
             'Alerta',
-            'Valor do desconto excedido!',
-            'Inclua aqui qualquer informação relevante do evento');
+            'Valor do desconto excedido!');
 
   ShowMessage('Alerta para o usuário.');
+end;
+
+procedure TfrmPrincipal.Button2Click(Sender: TObject);
+begin
+  _GoogleAnalytics
+    .Exception('Erro ao tentar tentar localizar o cliente', False);
+
+  ShowMessage('Erro ao tentar tentar localizar o cliente');
+end;
+
+procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  _GoogleAnalytics.EndSession;
+end;
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  _GoogleAnalytics.StartSession;
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);

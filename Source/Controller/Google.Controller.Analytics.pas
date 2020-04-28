@@ -46,7 +46,7 @@ type
 
     function AppInfo: iModelGoogleAppInfo;
 
-    function Event(ACategory, AAction, ALabel, AValue: String): iControllerGoogleAnalytics;
+    function Event(ACategory, AAction, ALabel: String; AValue: Integer = 0): iControllerGoogleAnalytics;
     function Exception(ADescription: String; AIsFatal: Boolean): iControllerGoogleAnalytics;
     function ScreenView(AScreenName: String): IControllerGoogleAnalytics;
     function PageView(ADocumentHostName, APage, ATitle: String): IControllerGoogleAnalytics;
@@ -102,7 +102,7 @@ end;
 
 destructor TControllerGoogleAnalytics.Destroy;
 begin
-  Sleep(100); //apenas para resolver o problema com a memoria ao fecha o sistema
+  Sleep(500); //apenas para resolver o problema com a memoria ao fecha o sistema
   inherited;
 end;
 
@@ -120,7 +120,7 @@ begin
     .Execute;
 end;
 
-function TControllerGoogleAnalytics.Event(ACategory, AAction, ALabel, AValue: String): iControllerGoogleAnalytics;
+function TControllerGoogleAnalytics.Event(ACategory, AAction, ALabel: String; AValue: Integer = 0): iControllerGoogleAnalytics;
 begin
   Result  :=  Self;
 

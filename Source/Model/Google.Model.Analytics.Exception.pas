@@ -65,6 +65,8 @@ var
   HTTPClient: TNetHTTPClient;
   Params: TStringList;
 begin
+  Result  :=  Self;
+
   HTTPClient:= TNetHTTPClient.Create(nil);
   try
     Params := TStringList.Create;
@@ -87,16 +89,6 @@ begin
                                       ]);
 
       Params.Values['cm'] :=  FParent.AppInfo.AppEdition;
-
-      (*AppInfo*)
-      if FParent.AppInfo.AppName <> '' then
-        Params.Values['an'] := FParent.AppInfo.AppName;
-      if FParent.AppInfo.AppVersion <> '' then
-        Params.Values['av'] := FParent.AppInfo.AppVersion;
-      if FParent.AppInfo.AppID <> '' then
-        Params.Values['aid']  := FParent.AppInfo.AppID;
-      if FParent.AppInfo.AppInstalerID <> '' then
-        Params.Values['aiid'] := FParent.AppInfo.AppInstalerID;
 
       Params.Values['t']  := 'exception';
       Params.Values['exd'] := FDescription;

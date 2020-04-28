@@ -23,7 +23,7 @@ type
 
     function AppInfo: iModelGoogleAppInfo;
 
-    function Event(ACategory, AAction, ALabel, AValue: String): iControllerGoogleAnalytics;
+    function Event(ACategory, AAction, ALabel: String; AValue: Integer = 0): iControllerGoogleAnalytics;
     function Exception(ADescription: String; AIsFatal: Boolean): iControllerGoogleAnalytics;
     function ScreenView(AScreenName: String): IControllerGoogleAnalytics;
     function PageView(ADocumentHostName, APage, ATitle: String): IControllerGoogleAnalytics;
